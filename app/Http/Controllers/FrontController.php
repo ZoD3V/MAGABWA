@@ -18,6 +18,7 @@ class FrontController extends Controller
         // Mengambil artikel yang tidak featured, dengan relasi kategori, diurutkan berdasarkan terbaru
         $articles = ArticleNews::with(['category'])
             ->where('is_featured', 'not_featured')
+            ->where('is_approve', 'approve')
             ->latest()
             ->take(3)
             ->get();
@@ -25,6 +26,7 @@ class FrontController extends Controller
         // Mengambil artikel yang featured secara acak, dengan relasi kategori
         $featured_articles = ArticleNews::with(['category'])
             ->where('is_featured', 'featured')
+            ->where('is_approve', 'approve')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -44,6 +46,7 @@ class FrontController extends Controller
                 $query->where('name', 'Entertainment');
             })
             ->where('is_featured', 'not_featured')
+            ->where('is_approve', 'approve')
             ->latest()
             ->take(6)
             ->get();
@@ -59,12 +62,12 @@ class FrontController extends Controller
 
         // Mengirim data ke view
         return view('front.index', compact(
-            'categories', 
-            'articles', 
-            'authors', 
-            'featured_articles', 
-            'bannerads', 
-            'entertainment_articles', 
+            'categories',
+            'articles',
+            'authors',
+            'featured_articles',
+            'bannerads',
+            'entertainment_articles',
             'entertainment_featured_articles'
         ));
     }
@@ -107,9 +110,11 @@ class FrontController extends Controller
         $categories = Category::all();
         $keyword = $request->keyword;
 
-        $articles = ArticleNews::with(['category', 'author'])
+            $articles = ArticleNews::with(['category', 'author'])
             ->where('name', 'like', '%' . $keyword . '%')
+            ->where('is_approve', 'approve')
             ->paginate(6);
+
 
         return view('front.search', compact('articles', 'keyword', 'categories'));
     }
@@ -120,6 +125,7 @@ class FrontController extends Controller
 
         $articles = ArticleNews::with(['category'])
             ->where('is_featured', 'not_featured')
+            ->where('is_approve', 'approve')
             ->where('id', '!=', $articleNews->id)
             ->latest()
             ->take(3)
@@ -135,7 +141,7 @@ class FrontController extends Controller
             ->inRandomOrder()
             ->take(2)
             ->get();
-        
+
         if ($square_ads->count() < 2) {
             $square_ads_1 = $square_ads->first();
             $square_ads_2 = $square_ads->first();

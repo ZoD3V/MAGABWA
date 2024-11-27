@@ -17,8 +17,9 @@ return new class extends Migration
             $table->longText('content');
             $table->string('thumbnail');
             $table->enum('is_featured', ['featured', 'not_featured'])->default('not_featured');
+            $table->enum('is_approve', ['approve', 'not_approve'])->default('not_approve');
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('author_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();

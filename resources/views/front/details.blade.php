@@ -25,12 +25,12 @@
                 {{$articleNews->name}}
             </h1>
             <div class="flex items-center justify-center gap-[70px]">
-                <a id="Author" href="{{ route('front.author', $articleNews->author->slug) }}" class="w-fit h-fit">
+                <a id="Author" href="{{ route('front.author', $articleNews->slug) }}" class="w-fit h-fit">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full overflow-hidden">
-                            <img src="{{ Storage::url($articleNews->author->avatar) }}"
+                        {{-- <div class="w-10 h-10 rounded-full overflow-hidden">
+                            <img src="{{ Storage::url($articleNews->author_id->avatar) }}"
                                 class="object-cover w-full h-full" alt="avatar">
-                        </div>
+                        </div> --}}
                         <div class="flex flex-col">
                             <p class="font-semibold text-sm leading-[21px]">
                                 {{$articleNews->author->name}}

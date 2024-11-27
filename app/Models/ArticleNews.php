@@ -20,6 +20,7 @@ class ArticleNews extends Model
         'category_id',
         'author_id',
         'is_featured',
+        'is_approve',
     ];
 
     public function setNameAttribute($value)
@@ -27,14 +28,14 @@ class ArticleNews extends Model
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
-    
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function author(): BelongsTo
+    public function author()
     {
-        return $this->belongsTo(Author::class, 'author_id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 }
